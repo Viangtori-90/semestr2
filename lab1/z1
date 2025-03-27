@@ -1,1 +1,10 @@
+public class App {
+    public static void main(String[] args){
+        var str1 = "abc";
+        var str2 = "dc";
 
+        boolean res = str1.endsWith(str2);
+
+        System.out.println(res);
+    }
+}
