@@ -1,0 +1,7 @@
+public class App {
+    public static void main(String[] args){
+        var Name = "aNnA";
+        var CorrectName = Name.substring(0,1).toUpperCase() + Name.substring(1).toLowerCase();
+        System.out.println("Hello, " + CorrectName);
+    }
+}
