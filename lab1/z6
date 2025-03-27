@@ -1,0 +1,67 @@
+import java.util.Scanner;
+
+public class MemoryCell {
+    private Integer[] memory;
+    private int count;
+
+    public MemoryCell() {
+        memory = new Integer[3];
+        count = 0; 
+    }
+
+    public void addNumber(int number) {
+        if (count < memory.length) {
+            // Есть свободные ячейки
+            for (int i = 0; i < memory.length; i++) {
+                if (memory[i] == null) { 
+                    memory[i] = number;
+                    count++;
+                    break;
+                }
+            }
+        } else {
+            
+            int minIndex = 0;
+            for (int i = 1; i < memory.length; i++) {
+                if (memory[i] < memory[minIndex]) {
+                    minIndex = i;
+                }
+            }
+            memory[minIndex] = number; 
+        }
+        printMemory(); 
+    }
+
+    public void printMemory() {
+        System.out.print("Состояние памяти: ");
+        for (Integer num : memory) {
+            if (num != null) {
+                System.out.print(num + " ");
+            } else {
+                System.out.print("null "); 
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        MemoryCell mc = new MemoryCell();
+
+        while (true) {
+            System.out.print("Введите число (или 'exit' для выхода): ");
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            }
+            try {
+                int number = Integer.parseInt(input);
+                mc.addNumber(number); // Добавляем введенное число
+            } catch (NumberFormatException e) {
+                System.out.println("Пожалуйста, введите целое число.");
+            }
+        }
+
+        scanner.close();
+    }
+}
