@@ -1,0 +1,21 @@
+import java.util.Scanner;
+
+public class SquareSeries {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите первое число: ");
+        int firstNumber = scanner.nextInt();
+        System.out.print("Введите второе число: ");
+        int secondNumber = scanner.nextInt();
+
+        int step = Math.min(firstNumber, secondNumber);
+
+        for (int i = step; i <= step * 5; i += step) {
+            int square = i * i; // Вычисляем квадрат текущего числа
+            System.out.println(square); // Выводим квадрат
+        }
+
+        scanner.close();
+    }
+}
