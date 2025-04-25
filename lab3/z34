@@ -1,0 +1,38 @@
+import java.util.Scanner;
+
+public class z34 {
+    
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Kоличество палочек (n): ");
+        long n = scanner.nextLong();
+        
+        long tanyaSticks = calculateTanyaSticks(n);
+        System.out.println("Количество палочек у Тани: " + tanyaSticks);
+        
+        scanner.close();
+    }
+    
+    private static long calculateTanyaSticks(long n) {
+        long tanyaTotal = 0;
+        while (n > 0) {
+            if (n % 2 == 0) {
+                tanyaTotal += n / 2;
+                n -= n / 2;
+            } else {
+                // Если n нечетное, Таня берёт 1
+                tanyaTotal += 1;
+                n -= 1;
+            }
+            n -= getSashaSticks(n);
+        }
+        return tanyaTotal;
+    }
+    
+    private static long getSashaSticks(long n) {
+        if (n % 2 == 0) {
+            return n / 2; 
+        }
+        return 1; 
+    }
+}
