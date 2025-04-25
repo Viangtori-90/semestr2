@@ -6,12 +6,20 @@ public class z29 {
         
         System.out.print("Введите число n (0 < n < 100000): ");
         int n = scanner.nextInt();
+        
+        // Проверка условий
+        if (n <= 0 || n >= 100000) {
+            System.out.println("Число должно быть больше 0 и меньше 100000.");
+            return;
+        }
 
-        if (n > 0 && n < 100000) {
-            if (isDifferenceOfSquares(n)) {
-                System.out.println(n + " является разницей квадратов последовательных чисел.");
-            } else {
-                System.out.println(n + " не квадрат чисел.");
-            }
+        // Проверка на нечетность
+        if (n % 2 == 1) {
+            System.out.println(n + " может быть представлено как разность квадратов двух последовательных чисел.");
         } else {
-            System.out.println("
+            System.out.println(n + " не может быть представлено как разность квадратов двух последовательных чисел.");
+        }
+
+        scanner.close();
+    }
+}
