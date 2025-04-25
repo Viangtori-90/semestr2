@@ -1,15 +1,42 @@
 import java.util.Scanner;
 
 public class z28 {
+    
+    public static String caesarShift(String text, int shift, boolean isRight) {
+        StringBuilder result = new StringBuilder();
+        shift = isRight ? shift : -shift;
+
+        for (char ch : text.toCharArray()) {
+            if (Character.isLetter(ch)) {
+                char base = Character.isLowerCase(ch) ? 'a' : 'A';
+               
+                char shiftedChar = (char) ((ch - base + shift + 26) % 26 + base);
+                result.append(shiftedChar);
+            } else {
+                result.append(ch); 
+            }
+        }
+
+        return result.toString();
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Введите строку: ");
-        String inputText = scanner.nextLine();
+        System.out.println("Введите строку для шифрования:");
+        String text = scanner.nextLine();
 
-        System.out.print("Введите число сдвига: ");
+        System.out.println("Введите число сдвига:");
         int shift = scanner.nextInt();
 
-        System.out.print("Введите направление : ");
-        String direction = scanner.next();
-        if (direction.equalsIgnoreCase("вправо")) {
+        System.out.println("Введите направление (вправо - 1, влево - 0):");
+        int direction = scanner.nextInt();
+
+        boolean isRight = direction == 1;
+
+        String encryptedText = caesarShift(text, shift, isRight);
+        System.out.println("Зашифрованный текст: " + encryptedText);
+
+        scanner.close();
+    }
+}
