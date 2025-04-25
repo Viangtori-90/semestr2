@@ -1,20 +1,91 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
 public class z32 {
-
-    public static long fib(int n) {
-        if (n <= 1) return n;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите число i (10 ≤ i ≤ 100000): ");
+        int i = scanner.nextInt();
         
-        long[][] F = {{1, 1}, {1, 0}};
-        power(F, n - 1);
-        return F[0][0];
+        if (i < 10 || i > 100000) {
+            System.out.println("Ошибка: i должно быть в диапазоне от 10 до 100000.");
+            return;
+        }
+        
+        String fibonacciNumber = calculateFibonacci(i);
+        
+        Map<Character, Integer> digitCount = countDigits(fibonacciNumber);
+        
+        var result = findMaxOccurrence(digitCount);
+
+        System.out.println(result);
+        
+        scanner.close();
     }
 
-    public static void power(long[][] F, int n) {
-        if (n == 0 || n == 1)
-            return;
-        long[][] M = {{1, 1}, {1, 0}};
-        power(F, n / 2);
-        multiply(F, F);
-        if (n % 2 != 0) multiply(F, M);
+    private static String calculateFibonacci(int n) {
+        if (n == 0) return "0";
+        if (n == 1) return "1";
+
+        String a = "0";
+        String b = "1";
+        String fibonacci = "";
+
+        for (int j = 2; j <= n; j++) {
+            fibonacci = addStrings(a, b);
+            a = b;
+            b = fibonacci;
+        }
+        return fibonacci;
     }
-    
-    public static void multiply(long[][] F, long[][] M)
+
+    private static String addStrings(String a, String b) {
+        StringBuilder result = new StringBuilder();
+        int carry = 0;
+        int len1 = a.length(), len2 = b.length();
+        int maxLength = Math.max(len1, len2);
+
+        for (int i = 0; i < maxLength; i++) {
+            int digitA = i < len1 ? a.charAt(len1 - 1 - i) - '0' : 0;
+            int digitB = i < len2 ? b.charAt(len2 - 1 - i) - '0' : 0;
+
+            int sum = digitA + digitB + carry;
+            result.append(sum % 10);
+            carry = sum / 10;
+        }
+        
+        if (carry > 0) {
+            result.append(carry);
+        }
+        
+        return result.reverse().toString();
+    }
+
+    private static Map<Character, Integer> countDigits(String number) {
+        Map<Character, Integer> digitCount = new HashMap<>();
+        
+        for (char digit : number.toCharArray()) {
+            digitCount.put(digit, digitCount.getOrDefault(digit, 0) + 1);
+        }
+        
+        return digitCount;
+    }
+
+    private static String findMaxOccurrence(Map<Character, Integer> digitCount) {
+        char maxDigit = '0';
+        int maxCount = 0;
+
+        for (Map.Entry<Character, Integer> entry : digitCount.entrySet()) {
+            char digit = entry.getKey();
+            int count = entry.getValue();
+
+            if (count > maxCount || (count == maxCount && digit < maxDigit)) {
+                maxCount = count;
+                maxDigit = digit;
+            }
+        }
+        
+        return String.format("[(%d, %c)]", maxCount, maxDigit);
+    }
+}
