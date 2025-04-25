@@ -1,30 +1,15 @@
-def caesar_cipher(text, shift, direction):
-    result = ""
-    # Устанавливаем значение сдвига в зависимости от направления
-    if direction == "вправо":
-        shift = shift % 26  # берём сдвиг по модулю 26
-    elif direction == "влево":
-        shift = -shift % 26  # сдвиг в обратную сторону
-    else:
-        raise ValueError("Направление должно быть 'вправо' или 'влево'.")
+import java.util.Scanner;
 
-    # Шифруем текст
-    for char in text:
-        if char.isalpha():  # проверяем, является ли символ буквой
-            start = ord('А') if char.isupper() else ord('а')
-            result += chr((ord(char) - start + shift) % 26 + start)
-        else:
-            result += char  # не изменяем символы, не являющиеся буквами
-    
-    return result
+public class CaesarCipher {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-input_text = "Привет, мир!"
-shift_value = 3
-direction_value = "вправо"
+        System.out.print("Введите строку: ");
+        String inputText = scanner.nextLine();
 
-encrypted_text = caesar_cipher(input_text, shift_value, direction_value)
-print(encrypted_text)
+        System.out.print("Введите число сдвига: ");
+        int shift = scanner.nextInt();
 
-# Для расшифровки просто измените направление на "влево"
-decrypted_text = caesar_cipher(encrypted_text, shift_value, "влево")
-print(decrypted_text)
+        System.out.print("Введите направление : ");
+        String direction = scanner.next();
+        if (direction.equalsIgnoreCase("вправо")) {
