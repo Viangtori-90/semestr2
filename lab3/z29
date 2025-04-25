@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class DifferenceOfSquares {
+public class z29 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
