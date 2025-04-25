@@ -1,0 +1,17 @@
+import java.util.Scanner;
+
+public class DifferenceOfSquares {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Введите число n (0 < n < 100000): ");
+        int n = scanner.nextInt();
+
+        if (n > 0 && n < 100000) {
+            if (isDifferenceOfSquares(n)) {
+                System.out.println(n + " является разницей квадратов последовательных чисел.");
+            } else {
+                System.out.println(n + " не квадрат чисел.");
+            }
+        } else {
+            System.out.println("
