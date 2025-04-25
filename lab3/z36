@@ -1,0 +1,90 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+
+public class CaesarCipherDecoder {
+
+    private Set<String> dictionary;
+
+    public CaesarCipherDecoder(Set<String> dictionary) {
+        this.dictionary = dictionary;
+    }
+
+    public static void main(String[] args) {
+        try {
+            String url = "https://fish-text.ru";
+            String longText = downloadText(url);
+            Set<String> dictionary = createDictionary(longText);
+            CaesarCipherDecoder decoder = new CaesarCipherDecoder(dictionary);
+            String encryptedText = "Ваш зашифрованный текст здесь"; // замените на ваш текст
+            decoder.decodeWithFrequencyAnalysis(encryptedText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static String downloadText(String urlString) throws IOException {
+        URL url = new URL(urlString);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        StringBuilder content = new StringBuilder();
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            String line;
+            while ((line = in.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+        }
+        return content.toString();
+    }
+
+    private static Set<String> createDictionary(String text) {
+        Set<String> words = new HashSet<>();
+        String[] splitWords = text.split("\\W+");
+        for (String word : splitWords) {
+            if (word.length() > 2) {
+                words.add(word.toLowerCase());
+            }
+        }
+        return words;
+    }
+
+    public void decodeWithFrequencyAnalysis(String encryptedText) {
+        for (int shift = 1; shift <= 32; shift++) {
+            String decryptedText = decrypt(encryptedText, shift);
+            int validWordsCount = countValidWords(decryptedText);
+            System.out.println("Сдвиг: " + shift + ", Верные слова: " + validWordsCount + ", Расшифрованный текст: " + decryptedText);
+        }
+    }
+
+    private String decrypt(String encryptedText, int shift) {
+        StringBuilder decrypted = new StringBuilder();
+        for (char character : encryptedText.toCharArray()) {
+            char decryptedChar = character;
+            // Проверяем, является ли символ буквой
+            if (Character.isLetter(character)) {
+                decryptedChar = (char) (character - shift);
+                if ((Character.isLowerCase(character) && decryptedChar < 'a') ||
+                    (Character.isUpperCase(character) && decryptedChar < 'A')) {
+                    decryptedChar += 26; 
+                }
+            }
+            decrypted.append(decryptedChar);
+        }
+        return decrypted.toString();
+    }
+
+    private int countValidWords(String text) {
+        String[] words = text.split("\\W+");
+        int count = 0;
+        for (String word : words) {
+            if (dictionary.contains(word.toLowerCase())) {
+                count++;
+            }
+        }
+        return count;
+    }
+}
