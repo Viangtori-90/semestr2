@@ -1,22 +1,43 @@
 import java.util.Scanner;
 
 public class z30 {
+    
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-
+        
         System.out.print("Введите положительное число: ");
         int number = scanner.nextInt();
         
         System.out.print("Введите число для начала ряда: ");
-        int start = scanner.nextInt();
-
-        boolean isPossible = isSumEqualProduct(number, start);
-
-        if (isPossible) {
-            System.out.println("Возможная ситуация найдена.");
-        } else {
-            System.out.println("Такой ситуации не существует.");
+        int startPower = scanner.nextInt();
+        
+        if (number <= 0 || startPower <= 0) {
+            System.out.println("Оба вводимых числа должны быть положительными.");
+            return;
         }
+        
+        int sumOfPowers = calculateDigitPowersSum(number, startPower);
+
+        for (int multiplier = 1; multiplier <= 64; multiplier *= 2) {
+            if (sumOfPowers == number * multiplier) {
+                System.out.println("Ситуация возможна: " + sumOfPowers + " = " + number + "*" + (multiplier));
+                return;
+            }
+        }
+        
+        System.out.println("Ситуация невозможна.");
     }
 
-    private static boolean isSumEqual
+    private static int calculateDigitPowersSum(int number, int startPower) {
+        String numberStr = String.valueOf(number);
+        int sum = 0;
+        
+        for (int i = 0; i < numberStr.length(); i++) {
+            char digitChar = numberStr.charAt(i);
+            int digit = Character.getNumericValue(digitChar);
+            sum += Math.pow(digit, startPower + i);
+        }
+        
+        return sum;
+    }
+}
