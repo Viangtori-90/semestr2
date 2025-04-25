@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CaesarCipherDecoder {
+public class z36 {
 
     private Set<String> dictionary;
 
@@ -20,7 +20,7 @@ public class CaesarCipherDecoder {
             String longText = downloadText(url);
             Set<String> dictionary = createDictionary(longText);
             CaesarCipherDecoder decoder = new CaesarCipherDecoder(dictionary);
-            String encryptedText = "Ваш зашифрованный текст здесь"; // замените на ваш текст
+            String encryptedText = "Зашифрованный текст"; 
             decoder.decodeWithFrequencyAnalysis(encryptedText);
         } catch (IOException e) {
             e.printStackTrace();
