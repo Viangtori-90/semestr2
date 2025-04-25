@@ -19,12 +19,10 @@ public class EachThirdGame {
         int currentIndex = startPlayer - 1; 
 
         while (players.size() > 1) {
-            // Находим индекс игрока, который будет выбывать
             currentIndex = (currentIndex + 2) % players.size(); 
             eliminatedPlayers.add(players.get(currentIndex)); 
-            players.remove(currentIndex); // Убираем его из списка
+            players.remove(currentIndex); 
 
-            // Печатаем текущий статус
             System.out.println(players);
             System.out.println("=> " + eliminatedPlayers.get(eliminatedPlayers.size() - 1) + " выбывает и уходит в результат " + eliminatedPlayers);
         }
