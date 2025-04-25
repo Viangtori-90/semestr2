@@ -1,4 +1,4 @@
-public class FibonacciDigitFrequency {
+public class z32 {
 
     public static long fib(int n) {
         if (n <= 1) return n;
