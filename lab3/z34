@@ -20,7 +20,7 @@ public class z34 {
                 tanyaTotal += n / 2;
                 n -= n / 2;
             } else {
-                // Если n нечетное, Таня берёт 1
+                
                 tanyaTotal += 1;
                 n -= 1;
             }
