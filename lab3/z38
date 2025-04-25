@@ -1,0 +1,38 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class EachThirdGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Введите количество игроков: ");
+        int numberOfPlayers = scanner.nextInt();
+        System.out.print("Введите номер игрока, с которого начинается игра (1-" + numberOfPlayers + "): ");
+        int startPlayer = scanner.nextInt();
+
+        List<Integer> players = new ArrayList<>();
+        for (int i = 1; i <= numberOfPlayers; i++) {
+            players.add(i);
+        }
+        
+        List<Integer> eliminatedPlayers = new ArrayList<>();
+        int currentIndex = startPlayer - 1; 
+
+        while (players.size() > 1) {
+            // Находим индекс игрока, который будет выбывать
+            currentIndex = (currentIndex + 2) % players.size(); 
+            eliminatedPlayers.add(players.get(currentIndex)); 
+            players.remove(currentIndex); // Убираем его из списка
+
+            // Печатаем текущий статус
+            System.out.println(players);
+            System.out.println("=> " + eliminatedPlayers.get(eliminatedPlayers.size() - 1) + " выбывает и уходит в результат " + eliminatedPlayers);
+        }
+        
+        System.out.println("Победитель: " + players.get(0));
+        eliminatedPlayers.add(players.get(0)); 
+        System.out.println("Все выбывшие игроки: " + eliminatedPlayers);
+        
+        scanner.close();
+    }
+}
