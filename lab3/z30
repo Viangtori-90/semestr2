@@ -1,0 +1,22 @@
+import java.util.Scanner;
+
+public class DigitalPowerSum {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Введите положительное число: ");
+        int number = scanner.nextInt();
+        
+        System.out.print("Введите число для начала ряда: ");
+        int start = scanner.nextInt();
+
+        boolean isPossible = isSumEqualProduct(number, start);
+
+        if (isPossible) {
+            System.out.println("Возможная ситуация найдена.");
+        } else {
+            System.out.println("Такой ситуации не существует.");
+        }
+    }
+
+    private static boolean isSumEqual
