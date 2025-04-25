@@ -1,0 +1,20 @@
+public class FibonacciDigitFrequency {
+
+    public static long fib(int n) {
+        if (n <= 1) return n;
+        
+        long[][] F = {{1, 1}, {1, 0}};
+        power(F, n - 1);
+        return F[0][0];
+    }
+
+    public static void power(long[][] F, int n) {
+        if (n == 0 || n == 1)
+            return;
+        long[][] M = {{1, 1}, {1, 0}};
+        power(F, n / 2);
+        multiply(F, F);
+        if (n % 2 != 0) multiply(F, M);
+    }
+    
+    public static void multiply(long[][] F, long[][] M)
