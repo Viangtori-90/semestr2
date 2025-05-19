@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class UniqueSeries {
+    public static void main(String[] args) {
+        Set<Integer> uniqueNumbers = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(1);  
+        uniqueNumbers.add(1);
+
+        int n = 20; 
+
+        List<Integer> u = new ArrayList<>();
+        
+        while (u.size() < n) {
+            int current = queue.poll();
+            u.add(current);
+            
+            int y = 2 * current + 1;
+            int z = 3 * current + 1;
+
+            if (uniqueNumbers.add(y)) {
+                queue.offer(y);
+            }
+            if (uniqueNumbers.add(z)) {
+                queue.offer(z);
+            }
+        }
+
+
+        System.out.println("Сгенерированные уникальные числа u: " + u);
+    }
+}
