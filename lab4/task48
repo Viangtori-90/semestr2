@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class UniqueSeries {
+public class task48 {
     public static void main(String[] args) {
         Set<Integer> uniqueNumbers = new HashSet<>();
         Queue<Integer> queue = new LinkedList<>();
