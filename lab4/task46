@@ -1,1 +1,55 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
+public class task46 {
+
+    public static int romanToArabic(String roman) {
+        Map<Character, Integer> romanNumerals = new HashMap<>();
+        romanNumerals.put('I', 1);
+        romanNumerals.put('V', 5);
+        romanNumerals.put('X', 10);
+        romanNumerals.put('L', 50);
+        romanNumerals.put('C', 100);
+        romanNumerals.put('D', 500);
+        romanNumerals.put('M', 1000);
+
+        int arabicValue = 0;
+        int prevValue = 0;
+
+        for (int i = roman.length() - 1; i >= 0; i--) {
+            char currentChar = roman.charAt(i);
+            int currentValue = romanNumerals.get(currentChar);
+            
+            if (currentValue < prevValue) {
+                arabicValue -= currentValue;
+            } else {
+                arabicValue += currentValue;
+            }
+            prevValue = currentValue;
+        }
+
+        return arabicValue;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Введите римское число (от I до MMMMCMXCIX): ");
+        String roman = scanner.nextLine().toUpperCase();
+
+       
+        if (roman.isEmpty() || roman.length() < 1 || roman.length() >= 15) {
+            System.out.println("Некорректный ввод. Пожалуйста, введите валидное римское число.");
+        } else {
+            int arabic = romanToArabic(roman);
+            if (arabic > 0 && arabic < 10000) {
+                System.out.println("Арабское число: " + arabic);
+            } else {
+                System.out.println("Римское число должно быть в диапазоне от I до MMMMCMXCIX.");
+            }
+        }
+        
+        scanner.close();
+    }
+}
