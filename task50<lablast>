@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+
+public class task50 {
+    private static final String HISTORY_FILE = "history.txt";
+    private List<String> history;
+
+    public task50() {
+        history = new ArrayList<>();
+        loadHistory();
+    }
+
+    private void loadHistory() {
+        try (BufferedReader br = new BufferedReader(new FileReader(HISTORY_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                history.add(line);
+            }
+        } catch (IOException e) {
+            System.out.println("Ошибка загрузки истории: " + e.getMessage());
+        }
+    }
+
+    private void saveHistory(String expression, double result) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(HISTORY_FILE, true))) {
+            String entry = expression + " = " + result;
+            bw.write(entry);
+            bw.newLine();
+            history.add(entry);
+        } catch (IOException e) {
+            System.out.println("Ошибка сохранения в истории: " + e.getMessage());
+        }
+    }
+
+    private double evaluateExpression(String expression) {
+        try {
+            String modifiedExpression = expression.replace("^", "**");
+            return (Double) new javax.script.ScriptEngineManager().getEngineByName("JavaScript").eval(modifiedExpression);
+        } catch (Exception e) {
+            System.out.println("Ошибка вычисления: " + e.getMessage());
+            return Double.NaN;
+        }
+    }
+
+    private void showHistory() {
+        if (history.isEmpty()) {
+            System.out.println("История расчетов пуста.");
+            return;
+        }
+        System.out.println("История:");
+        for (String entry : history) {
+            System.out.println(entry);
+        }
+    }
+
+    public static void main(String[] args) {
+        task50 calculator = new task50();
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.print("Введите выражение: ");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                break;
+            } else if (input.equalsIgnoreCase("history")) {
+                calculator.showHistory();
+                continue;
+            }
+
+            double result = calculator.evaluateExpression(input);
+            if (!Double.isNaN(result)) {
+                System.out.println("Результат: " + result);
+                calculator.saveHistory(input, result);
+            }
+        }
+        scanner.close();
+    }
+}
